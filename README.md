@@ -163,8 +163,8 @@ _skillgenomeX12/
 ---
 
 ## 🔗 Resources
-
-- 🎬 **Demo Video**: Available in the project releases / Google Drive
+- 📡 **Deployed Dasboard**: https://skillgenome-x12.vercel.app/
+- 🎬 **Demo Video**: https://drive.google.com/file/d/1ThKae7l51iJVphI6zgaud8pLxRI8SV5u/view?usp=sharing
 - 📄 **Full Documentation**: `PROJECT_DOCUMENTATION.md`
 - 📊 **Presentation Summary**: `PRESENTATION_SUMMARY.md`
 - 🏛️ **Dataset Sources**: PLFS (Periodic Labour Force Survey), MoSPI
