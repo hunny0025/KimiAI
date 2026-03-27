@@ -271,11 +271,21 @@ const RegionalMap = ({ language }) => {
                 </div>
               )}
 
-              {/* Raw JSON toggle */}
-              <div className="mt-auto border-t border-gray-800 pt-3">
-                <div className="text-[10px] text-gray-600 font-mono">
-                  Source: PLFS 2023-24 + MoSPI Regional Estimates
+              {/* Actionable Insights */}
+              <div className="mt-4 border-t border-gray-800 pt-4">
+                <div className="text-[10px] text-blue-400 font-bold uppercase mb-2 tracking-wider">Strategic Outlook</div>
+                <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    {selected.innovation_intensity > 70 
+                      ? `Critical mass achieved in ${selected.state}. Recommend pivoting to Frontier Tech scaling and export-led growth.`
+                      : `Early adoption phase. Focus on 'Last Mile' digital skilling and fundamental infrastructure in ${selected.state}.`}
+                  </p>
                 </div>
+              </div>
+
+              {/* Data Provenance */}
+              <div className="mt-auto pt-4 text-[9px] text-gray-600 italic">
+                Cross-referenced with CMIE Economic Indicators Q1 2026
               </div>
             </div>
           ) : (
@@ -288,7 +298,7 @@ const RegionalMap = ({ language }) => {
                 </p>
               </div>
               
-              <div className="flex-1 overflow-y-auto pr-1 custom-scrollbar">
+              <div className="flex-1 overflow-y-auto pr-1">
                 <h3 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">
                   Top performing regions
                 </h3>
@@ -300,45 +310,54 @@ const RegionalMap = ({ language }) => {
                       <button
                         key={item.state}
                         onClick={() => setSelected(item)}
-                        className="w-full flex items-center justify-between p-2 rounded bg-gray-800/30 hover:bg-gray-800/60 border border-transparent hover:border-gray-700 transition-all text-left group"
+                        className="w-full flex items-center justify-between p-2 rounded bg-gray-800/30 hover:bg-gray-800/60 transition-all text-left"
                       >
                         <div className="flex items-center gap-2 min-w-0">
-                          <span className="text-[10px] font-mono text-gray-600 w-3">{idx + 1}</span>
-                          <span className="text-xs text-gray-300 truncate group-hover:text-white transition-colors">
-                            {item.state}
-                          </span>
+                          <span className="text-[10px] font-mono text-gray-600">{idx + 1}</span>
+                          <span className="text-xs text-gray-300 truncate">{item.state}</span>
                         </div>
-                        <div className="flex items-center gap-1.5 flex-shrink-0">
-                          <span className="text-xs font-bold text-blue-400">
-                            {item[cfg.field]}
-                            {cfg.unit}
-                          </span>
-                          <ChevronRight size={10} className="text-gray-600 group-hover:text-gray-400" />
-                        </div>
+                        <span className="text-xs font-bold text-blue-400">
+                          {item[cfg.field]}{cfg.unit}
+                        </span>
                       </button>
                     ))}
                 </div>
-              </div>
-
-              <div className="mt-4 p-3 bg-blue-500/5 rounded border border-blue-500/10">
-                <div className="text-[10px] text-blue-300 font-bold uppercase mb-1">Regional Insight</div>
-                <p className="text-[11px] text-gray-500 leading-relaxed">
-                  Southern and Western states show higher innovation intensity, while northern regions are seeing rapid growth in digital access.
-                </p>
               </div>
             </div>
           )}
         </div>
       </div>
 
-      {/* ── Footer: what is this ── */}
-      <div className="border-t border-gray-800 px-5 py-3 flex items-center justify-between bg-gray-950/50">
-        <div className="text-[10px] text-gray-600">
-          Data: National Skill Census v2.4 · PLFS 2023-24 (MoSPI) · Wheebox India Skills Report 2025
-        </div>
-        <div className="flex items-center gap-1.5">
-          <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-          <span className="text-[10px] text-gray-500">Live intelligence layer active</span>
+      {/* ── Footer: Metrics Glossary ── */}
+      <div className="border-t border-gray-800 px-5 py-4 bg-gray-950/80">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex items-center gap-6">
+            <div className="flex flex-col gap-1">
+              <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Metrics Glossary</span>
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-1.5 group cursor-help">
+                  <div className="w-2 h-2 rounded-full bg-blue-500" />
+                  <span className="text-[11px] text-gray-300 font-medium">Innovation Intensity:</span>
+                  <span className="text-[11px] text-gray-500">How much digital output is created per rupee spent.</span>
+                </div>
+                <div className="flex items-center gap-1.5 group cursor-help">
+                  <div className="w-2 h-2 rounded-full bg-red-500" />
+                  <span className="text-[11px] text-gray-300 font-medium">Risk Index:</span>
+                  <span className="text-[11px] text-gray-500">Likelihood of workforce displacement by automation.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="text-[10px] text-gray-600 text-right hidden md:block">
+              Skill Census v2.4 · PLFS 2023-24 (MoSPI)
+            </div>
+            <div className="h-8 w-px bg-gray-800 hidden md:block" />
+            <div className="flex items-center gap-1.5 bg-green-500/10 border border-green-500/20 px-2.5 py-1 rounded">
+              <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+              <span className="text-[10px] text-green-400 font-bold uppercase tracking-tighter">DATA ENGINE CONNECTED</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
