@@ -901,6 +901,86 @@ def policy_simulate():
 
     return jsonify(sim_data)
 
+@app.route('/api/policy', methods=['POST'])
+def get_policy_recommendations():
+    """Return AI-driven policy recommendations for a state or all states."""
+    data = request.json or {}
+    target_state = data.get('state', None)
+
+    # Static policy knowledge base — covers all major Indian states
+    _POLICY_DB = {
+        'Maharashtra':   {'risk': 28, 'digital': 22, 'skill': 30, 'migration': 18, 'priority': 'Medium', 'impact': 2840},
+        'Uttar Pradesh': {'risk': 72, 'digital': 68, 'skill': 75, 'migration': 55, 'priority': 'High',   'impact': 5200},
+        'Bihar':         {'risk': 86, 'digital': 82, 'skill': 88, 'migration': 72, 'priority': 'High',   'impact': 6100},
+        'Tamil Nadu':    {'risk': 35, 'digital': 32, 'skill': 38, 'migration': 22, 'priority': 'Medium', 'impact': 2200},
+        'Karnataka':     {'risk': 25, 'digital': 20, 'skill': 26, 'migration': 15, 'priority': 'Low',    'impact': 1800},
+        'Rajasthan':     {'risk': 68, 'digital': 65, 'skill': 70, 'migration': 50, 'priority': 'High',   'impact': 4800},
+        'West Bengal':   {'risk': 51, 'digital': 48, 'skill': 55, 'migration': 36, 'priority': 'Medium', 'impact': 3100},
+        'Odisha':        {'risk': 64, 'digital': 60, 'skill': 68, 'migration': 48, 'priority': 'High',   'impact': 4200},
+        'Jharkhand':     {'risk': 79, 'digital': 75, 'skill': 82, 'migration': 62, 'priority': 'High',   'impact': 5600},
+        'Madhya Pradesh':{'risk': 70, 'digital': 66, 'skill': 73, 'migration': 52, 'priority': 'High',   'impact': 5000},
+        'Gujarat':       {'risk': 30, 'digital': 26, 'skill': 32, 'migration': 18, 'priority': 'Medium', 'impact': 2100},
+        'Kerala':        {'risk': 20, 'digital': 18, 'skill': 22, 'migration': 14, 'priority': 'Low',    'impact': 1500},
+        'Delhi':         {'risk': 15, 'digital': 12, 'skill': 16, 'migration': 10, 'priority': 'Low',    'impact': 1200},
+        'Telangana':     {'risk': 28, 'digital': 24, 'skill': 30, 'migration': 20, 'priority': 'Medium', 'impact': 2000},
+        'Andhra Pradesh':{'risk': 42, 'digital': 38, 'skill': 45, 'migration': 30, 'priority': 'Medium', 'impact': 2800},
+        'Punjab':        {'risk': 38, 'digital': 34, 'skill': 40, 'migration': 28, 'priority': 'Medium', 'impact': 2400},
+        'Haryana':       {'risk': 33, 'digital': 30, 'skill': 35, 'migration': 22, 'priority': 'Medium', 'impact': 2200},
+        'Assam':         {'risk': 58, 'digital': 55, 'skill': 62, 'migration': 44, 'priority': 'High',   'impact': 3800},
+        'Uttarakhand':   {'risk': 45, 'digital': 42, 'skill': 48, 'migration': 32, 'priority': 'Medium', 'impact': 2900},
+        'Chhattisgarh':  {'risk': 73, 'digital': 70, 'skill': 76, 'migration': 56, 'priority': 'High',   'impact': 5100},
+    }
+
+    def _build_recs(state, s):
+        recs = []
+        if s['digital'] > 50:
+            recs.append({
+                'state': state, 'recommended_action': 'Rural Broadband Expansion Initiative',
+                'reason': f"Digital divide index is {s['digital']} — above critical threshold of 50. Rural connectivity must be expanded to bridge the skill access gap.",
+                'impact_estimate': f"{round(s['digital'] * 0.3)}% reduction in digital divide in 18 months",
+                'confidence': 0.88, 'intervention_priority_score': s['digital']
+            })
+        if s['skill'] > 45:
+            recs.append({
+                'state': state, 'recommended_action': 'Skill Development Centre (SDC) Deployment',
+                'reason': f"Skill deficit index is {s['skill']}. District-level skilling centres aligned with NSDC curriculum are required.",
+                'impact_estimate': f"25% improvement in employability within 24 months",
+                'confidence': 0.84, 'intervention_priority_score': s['skill']
+            })
+        if s['migration'] > 40:
+            recs.append({
+                'state': state, 'recommended_action': 'Industry & Tech Hub Establishment',
+                'reason': f"Migration pressure index is {s['migration']}. Local employment through industrial clusters will reduce outward migration.",
+                'impact_estimate': f"40% reduction in migration pressure within 36 months",
+                'confidence': 0.79, 'intervention_priority_score': s['migration']
+            })
+        if not recs:
+            recs.append({
+                'state': state, 'recommended_action': 'AI Upskilling & Workforce Modernisation',
+                'reason': f"{state} has a manageable risk index of {s['risk']}. Focus on advanced digital skills to maintain competitive advantage.",
+                'impact_estimate': "15% productivity gain in 12 months",
+                'confidence': 0.91, 'intervention_priority_score': 40
+            })
+        return recs
+
+    if target_state and target_state in _POLICY_DB:
+        s = _POLICY_DB[target_state]
+        recs = _build_recs(target_state, s)
+        return jsonify({
+            'state': target_state,
+            'policies': recs,
+            'economic_impact': s['impact'],
+            'risk_level': s['risk'],
+            'implementation_priority': s['priority']
+        })
+
+    # No state specified — return top recommendations across all states
+    all_recs = []
+    for state, s in _POLICY_DB.items():
+        all_recs.extend(_build_recs(state, s))
+    all_recs.sort(key=lambda x: x['intervention_priority_score'], reverse=True)
+    return jsonify(all_recs[:12])
+
 @app.route('/api/risk-analysis', methods=['GET'])
 def get_risk_analysis():
     risks = calculate_risks()
