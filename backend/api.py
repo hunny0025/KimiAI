@@ -1786,14 +1786,18 @@ def db_status():
         return jsonify({"status": "error", "message": str(e)}), 503
 
 
-# --- STATIC FILE SERVING ---
-@app.route('/', defaults={'path': ''})
+# --- API STATUS / ROOT ---
+@app.route('/')
+def home():
+    return jsonify({
+        "status": "SkillGenome X API - Online",
+        "endpoints": ["/api/predict", "/api/ai-status", "/api/alerts", "/api/health"],
+        "version": "1.1.0"
+    })
+
 @app.route('/<path:path>')
-def serve(path):
-    if path != "" and os.path.exists(app.static_folder + '/' + path):
-        return send_from_directory(app.static_folder, path)
-    else:
-        return send_from_directory(app.static_folder, 'index.html')
+def catch_all(path):
+    return jsonify({"error": "Endpoint not found", "path": path}), 404
 
 
 if __name__ == '__main__':
