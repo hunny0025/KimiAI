@@ -24,6 +24,8 @@ import PredictionExplainPanel from './components/PredictionExplainPanel';
 import AIStatusPanel from './components/AIStatusPanel';
 import DatasetPanel from './components/DatasetPanel';
 import SkillRiskPanel from './components/SkillRiskPanel';
+import NationalDistribution from './components/NationalDistribution';
+import TalentSummary from './components/TalentSummary';
 
 // Fix 3 – Provenance
 import ProvenanceBanner from './components/ProvenanceBanner';
@@ -119,8 +121,14 @@ function App() {
                                 {/* Prediction Summary (Main Output) */}
                                 <PredictionSummary data={prediction} />
 
-                                {/* National Data Foundation */}
-                                <DataFoundation />
+                                {/* NEW: Restored National Talent Assessment */}
+                                <TalentSummary data={prediction} />
+
+                                {/* National Data Foundation & Distribution */}
+                                <div className="grid grid-cols-1 gap-6">
+                                    <NationalDistribution language={language} />
+                                    <DataFoundation />
+                                </div>
 
                                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                                     {/* Input & Context */}
