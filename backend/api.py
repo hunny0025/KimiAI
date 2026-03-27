@@ -54,9 +54,27 @@ from db import repository as repo
 # Configure Flask to serve the frontend static files
 app = Flask(__name__, static_folder='../frontend/dist', static_url_path='/')
 
-# ── CORS: open to all origins for the public API (Fix 10) ─────────────────
-_allowed_origins = os.getenv("ALLOWED_ORIGINS", "*")
-CORS(app, resources={r"/api/*": {"origins": _allowed_origins}}, supports_credentials=False)
+# ── CORS: open to all origins ─────────────────────────────────────────────
+# Belt-and-suspenders: flask-cors + manual after_request hook
+# Ensures Vercel → Render calls are never blocked regardless of env var state
+CORS(app, origins="*", supports_credentials=False)
+
+@app.after_request
+def _add_cors_headers(response):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization, X-Requested-With"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+    return response
+
+@app.before_request
+def _handle_preflight():
+    if request.method == "OPTIONS":
+        from flask import Response
+        res = Response()
+        res.headers["Access-Control-Allow-Origin"] = "*"
+        res.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization, X-Requested-With"
+        res.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+        return res
 
 # ── Rate limiter (Fix 2) – 30 predictions per minute per IP ───────────────
 limiter = Limiter(
