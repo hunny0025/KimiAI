@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: skillgenome-api
+    env: python
+    rootDir: backend
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn api:app"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
+      - key: FLASK_ENV
+        value: production
+      - key: ALLOWED_ORIGINS
+        value: "*"
