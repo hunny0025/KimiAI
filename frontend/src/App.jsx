@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 // --- PRODUCTION DEPLOYMENT CONFIG ---
-const API_BASE = import.meta.env.VITE_API_URL || '';
-axios.defaults.baseURL = API_BASE;
+// All /api/* calls go through Vercel proxy rewrite (vercel.json) → Render backend
+// DO NOT set baseURL to Render URL — it bypasses the proxy and causes CORS errors
+axios.defaults.baseURL = '';
 
 import Sidebar from './components/Sidebar';
 import AlertsPanel from './components/AlertsPanel';
