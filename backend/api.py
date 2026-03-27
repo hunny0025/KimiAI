@@ -54,9 +54,9 @@ from db import repository as repo
 # Configure Flask to serve the frontend static files
 app = Flask(__name__, static_folder='../frontend/dist', static_url_path='/')
 
-# ── CORS: read allowed origins from .env (Fix 10) ─────────────────────────
-_allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173").split(",")
-CORS(app, origins=_allowed_origins)
+# ── CORS: open to all origins for the public API (Fix 10) ─────────────────
+_allowed_origins = os.getenv("ALLOWED_ORIGINS", "*")
+CORS(app, resources={r"/api/*": {"origins": _allowed_origins}}, supports_credentials=False)
 
 # ── Rate limiter (Fix 2) – 30 predictions per minute per IP ───────────────
 limiter = Limiter(
