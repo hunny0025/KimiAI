@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 // --- PRODUCTION DEPLOYMENT CONFIG ---
-// If VITE_API_URL is set (Vercel), use it as base. Otherwise fallback to local proxy.
 const API_BASE = import.meta.env.VITE_API_URL || '';
 axios.defaults.baseURL = API_BASE;
 
@@ -25,6 +24,11 @@ import AIStatusPanel from './components/AIStatusPanel';
 import DatasetPanel from './components/DatasetPanel';
 import SkillRiskPanel from './components/SkillRiskPanel';
 
+// Fix 3 – Provenance
+import ProvenanceBanner from './components/ProvenanceBanner';
+// Fix 4 – Error boundary
+import ErrorBoundary from './components/ErrorBoundary';
+
 import { motion, AnimatePresence } from 'framer-motion';
 
 function App() {
@@ -33,6 +37,19 @@ function App() {
     const [loading, setLoading] = useState(false);
     const [prediction, setPrediction] = useState(null);
     const [kpiData, setKpiData] = useState(null);
+    // Fix 7 – Offline detection
+    const [isOffline, setIsOffline] = useState(!navigator.onLine);
+
+    useEffect(() => {
+        const goOffline = () => setIsOffline(true);
+        const goOnline  = () => setIsOffline(false);
+        window.addEventListener('offline', goOffline);
+        window.addEventListener('online',  goOnline);
+        return () => {
+            window.removeEventListener('offline', goOffline);
+            window.removeEventListener('online',  goOnline);
+        };
+    }, []);
 
     // State for Inputs
     const [context, setContext] = useState({ state: 'Maharashtra', area_type: 'Urban', opportunity_level: 'High', infrastructure_access: 'High', digital_access: 'Regular' });
@@ -72,7 +89,17 @@ function App() {
     };
 
     return (
-        <div className="dashboard-grid bg-background text-text">
+        <ErrorBoundary>
+        {/* Fix 3 – Provenance warning banner (dismissable) */}
+        <ProvenanceBanner />
+        {/* Fix 7 – Offline mode banner */}
+        {isOffline && (
+            <div className="fixed top-0 left-0 w-full z-50 flex items-center justify-center gap-2 px-4 py-2 text-xs font-medium bg-amber-500/20 border-b border-amber-500/40 text-amber-300">
+                <span>📡</span>
+                <span>Offline mode — showing cached data up to 24h old</span>
+            </div>
+        )}
+        <div className={`dashboard-grid bg-background text-text${isOffline ? ' mt-8' : ''}`}>
             {/* 1. LEFT SIDEBAR */}
             <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} language={language} setLanguage={setLanguage} />
 
@@ -153,6 +180,7 @@ function App() {
                 <AlertsPanel prediction={prediction} language={language} />
             </aside>
         </div>
+        </ErrorBoundary>
     );
 }
 

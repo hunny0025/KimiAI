@@ -1,5 +1,6 @@
 import React from 'react';
 import { Award, Briefcase, Zap, ShieldAlert, TrendingUp, CheckCircle, Activity, Globe, Cpu, XCircle, Shield, Target, Lightbulb, BookOpen, Building2, Smartphone, Users, ArrowUpRight, Info } from 'lucide-react';
+import XAIWaterfallChart from './XAIWaterfallChart';
 
 const PredictionSummary = ({ data, sourceVerification }) => {
     if (!data || !data.core) return null;
@@ -113,64 +114,13 @@ const PredictionSummary = ({ data, sourceVerification }) => {
                 </div>
             </div>
 
-            {/* ═══════ 2. EXPLAINABILITY ═══════ */}
+            {/* ═══════ 2. EXPLAINABILITY – Waterfall Chart ═══════ */}
             {explanations && (explanations.top_positive?.length > 0 || explanations.top_negative?.length > 0) && (
-                <div className="bg-[#0F172A] border border-gray-700 rounded-xl p-5 shadow-lg">
-                    <h3 className="text-sm font-bold text-white uppercase mb-4 flex items-center gap-2 tracking-wider">
-                        <Cpu className="w-4 h-4 text-blue-400" /> Key Factors Affecting Your Score
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="bg-emerald-900/10 border border-emerald-500/20 rounded-lg p-4">
-                            <div className="text-[10px] text-emerald-400 uppercase tracking-wider font-bold mb-3 flex items-center gap-1.5">
-                                <TrendingUp className="w-3 h-3" /> Strengths
-                            </div>
-                            <div className="space-y-2.5">
-                                {(explanations.top_positive || []).slice(0, 2).map((item, i) => (
-                                    <div key={i}>
-                                        <div className="flex justify-between items-center mb-1">
-                                            <span className="text-xs text-gray-300">
-                                                {(item.feature || '').replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
-                                            </span>
-                                            <span className="text-xs font-bold text-emerald-400">+{item.impact}</span>
-                                        </div>
-                                        <div className="w-full bg-gray-800 rounded-full h-1.5">
-                                            <div className="bg-emerald-500 h-1.5 rounded-full transition-all duration-700" style={{ width: `${Math.min(100, Math.abs(item.impact) * 3)}%` }}></div>
-                                        </div>
-                                    </div>
-                                ))}
-                                {(!explanations.top_positive || explanations.top_positive.length === 0) && (
-                                    <div className="text-xs text-gray-500 italic">Consistent baseline performance</div>
-                                )}
-                            </div>
-                        </div>
-                        <div className="bg-red-900/10 border border-red-500/20 rounded-lg p-4">
-                            <div className="text-[10px] text-red-400 uppercase tracking-wider font-bold mb-3 flex items-center gap-1.5">
-                                <ShieldAlert className="w-3 h-3" /> Areas to Improve
-                            </div>
-                            <div className="space-y-2.5">
-                                {(explanations.top_negative || []).slice(0, 2).map((item, i) => (
-                                    <div key={i}>
-                                        <div className="flex justify-between items-center mb-1">
-                                            <span className="text-xs text-gray-300">
-                                                {(item.feature || '').replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
-                                            </span>
-                                            <span className="text-xs font-bold text-red-400">{item.impact}</span>
-                                        </div>
-                                        <div className="w-full bg-gray-800 rounded-full h-1.5">
-                                            <div className="bg-red-500 h-1.5 rounded-full transition-all duration-700" style={{ width: `${Math.min(100, Math.abs(item.impact) * 3)}%` }}></div>
-                                        </div>
-                                    </div>
-                                ))}
-                                {(!explanations.top_negative || explanations.top_negative.length === 0) && (
-                                    <div className="text-xs text-gray-500 italic">No significant weaknesses detected</div>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                    <div className="text-[10px] text-gray-600 mt-2 text-center">
-                        Impact = Feature Importance × Deviation from Baseline (50)
-                    </div>
-                </div>
+                <XAIWaterfallChart
+                    topPositive={explanations.top_positive || []}
+                    topNegative={explanations.top_negative || []}
+                    totalScore={score}
+                />
             )}
 
             {/* ═══════ 3. ACTION RECOMMENDATIONS ═══════ */}

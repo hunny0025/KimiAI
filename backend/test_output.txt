@@ -1,0 +1,370 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.10.8, pytest-9.0.2, pluggy-1.6.0 -- C:\Users\HP\AppData\Local\Programs\Python\Python310\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\HP\.gemini\antigravity\scratch\_skillgenomeX12\backend
+configfile: pytest.ini
+plugins: cov-7.1.0
+collecting ... collected 95 items
+
+tests/test_plfs_pipeline.py::TestSchemaValidation::test_valid_dataframe_passes PASSED [  1%]
+tests/test_plfs_pipeline.py::TestSchemaValidation::test_valid_report_has_no_hard_errors PASSED [  2%]
+tests/test_plfs_pipeline.py::TestSchemaValidation::test_missing_state_column_fails PASSED [  3%]
+tests/test_plfs_pipeline.py::TestSchemaValidation::test_missing_sector_column_fails PASSED [  4%]
+tests/test_plfs_pipeline.py::TestSchemaValidation::test_missing_age_column_fails PASSED [  5%]
+tests/test_plfs_pipeline.py::TestSchemaValidation::test_missing_all_required_fails PASSED [  6%]
+tests/test_plfs_pipeline.py::TestSchemaValidation::test_soft_missing_column_generates_warning PASSED [  7%]
+tests/test_plfs_pipeline.py::TestSchemaValidation::test_soft_missing_does_not_count_as_hard_missing PASSED [  8%]
+tests/test_plfs_pipeline.py::TestSchemaValidation::test_non_numeric_age_produces_type_error PASSED [  9%]
+tests/test_plfs_pipeline.py::TestSchemaValidation::test_partial_bad_age_values_counted_correctly PASSED [ 10%]
+tests/test_plfs_pipeline.py::TestSchemaValidation::test_float_column_with_text_generates_warning PASSED [ 11%]
+tests/test_plfs_pipeline.py::TestSchemaValidation::test_age_below_minimum_generates_warning PASSED [ 12%]
+tests/test_plfs_pipeline.py::TestSchemaValidation::test_age_above_maximum_generates_warning PASSED [ 13%]
+tests/test_plfs_pipeline.py::TestSchemaValidation::test_state_code_out_of_range_warns PASSED [ 14%]
+tests/test_plfs_pipeline.py::TestSchemaValidation::test_invalid_sector_value_generates_warning PASSED [ 15%]
+tests/test_plfs_pipeline.py::TestSchemaValidation::test_invalid_sex_value_generates_warning PASSED [ 16%]
+tests/test_plfs_pipeline.py::TestSchemaValidation::test_all_null_column_generates_warning PASSED [ 17%]
+tests/test_plfs_pipeline.py::TestSchemaValidation::test_report_total_rows_matches_df PASSED [ 18%]
+tests/test_plfs_pipeline.py::TestSchemaValidation::test_report_columns_found_matches PASSED [ 20%]
+tests/test_plfs_pipeline.py::TestSchemaValidation::test_report_summary_string_is_non_empty PASSED [ 21%]
+tests/test_plfs_pipeline.py::TestSchemaValidation::test_report_to_dict_is_json_serialisable PASSED [ 22%]
+tests/test_plfs_pipeline.py::TestColumnAliasing::test_long_form_age_aliased PASSED [ 23%]
+tests/test_plfs_pipeline.py::TestColumnAliasing::test_long_form_sector_aliased PASSED [ 24%]
+tests/test_plfs_pipeline.py::TestColumnAliasing::test_long_form_education_aliased PASSED [ 25%]
+tests/test_plfs_pipeline.py::TestColumnAliasing::test_short_form_columns_unchanged PASSED [ 26%]
+tests/test_plfs_pipeline.py::TestColumnAliasing::test_alias_does_not_duplicate_columns PASSED [ 27%]
+tests/test_plfs_pipeline.py::TestColumnAliasing::test_aliased_dict_populated PASSED [ 28%]
+tests/test_plfs_pipeline.py::TestColumnAliasing::test_whitespace_in_column_names_handled PASSED [ 29%]
+tests/test_plfs_pipeline.py::TestFieldMapping::test_nic_it_maps_to_correct_domain PASSED [ 30%]
+tests/test_plfs_pipeline.py::TestFieldMapping::test_nic_agriculture_maps_correctly PASSED [ 31%]
+tests/test_plfs_pipeline.py::TestFieldMapping::test_nic_construction_maps_correctly PASSED [ 32%]
+tests/test_plfs_pipeline.py::TestFieldMapping::test_nic_education_maps_correctly PASSED [ 33%]
+tests/test_plfs_pipeline.py::TestFieldMapping::test_sector_1_maps_to_rural PASSED [ 34%]
+tests/test_plfs_pipeline.py::TestFieldMapping::test_sector_2_maps_to_urban PASSED [ 35%]
+tests/test_plfs_pipeline.py::TestFieldMapping::test_internet_used_1_gives_high_digital_access PASSED [ 36%]
+tests/test_plfs_pipeline.py::TestFieldMapping::test_no_internet_no_mobile_gives_limited FAILED [ 37%]
+tests/test_plfs_pipeline.py::TestFieldMapping::test_regular_salaried_gives_high_opportunity PASSED [ 38%]
+tests/test_plfs_pipeline.py::TestFieldMapping::test_unemployed_gives_low_opportunity PASSED [ 40%]
+tests/test_plfs_pipeline.py::TestFieldMapping::test_graduate_education_gives_80_score PASSED [ 41%]
+tests/test_plfs_pipeline.py::TestFieldMapping::test_not_literate_gives_low_score PASSED [ 42%]
+tests/test_plfs_pipeline.py::TestFieldMapping::test_state_code_mapped_to_state_name PASSED [ 43%]
+tests/test_plfs_pipeline.py::TestFieldMapping::test_output_has_all_required_internal_columns PASSED [ 44%]
+tests/test_plfs_pipeline.py::TestFieldMapping::test_mpce_class_8_gives_correct_income PASSED [ 45%]
+tests/test_plfs_pipeline.py::TestImputation::test_no_nulls_remain_in_categorical_cols FAILED [ 46%]
+tests/test_plfs_pipeline.py::TestImputation::test_no_nulls_in_integer_behavioral_scores PASSED [ 47%]
+tests/test_plfs_pipeline.py::TestImputation::test_integer_fill_uses_median_not_mean PASSED [ 48%]
+tests/test_plfs_pipeline.py::TestImputation::test_socioeconomic_float_nulls_are_filled PASSED [ 49%]
+tests/test_plfs_pipeline.py::TestNormalisation::test_scores_above_100_clipped PASSED [ 50%]
+tests/test_plfs_pipeline.py::TestNormalisation::test_scores_below_0_clipped PASSED [ 51%]
+tests/test_plfs_pipeline.py::TestNormalisation::test_rates_clipped_to_100 PASSED [ 52%]
+tests/test_plfs_pipeline.py::TestNormalisation::test_low_quality_rows_dropped PASSED [ 53%]
+tests/test_plfs_pipeline.py::TestNormalisation::test_valid_rows_not_dropped PASSED [ 54%]
+tests/test_plfs_pipeline.py::TestSchemaHelpers::test_nic_none_returns_general PASSED [ 55%]
+tests/test_plfs_pipeline.py::TestSchemaHelpers::test_nic_zero_returns_general PASSED [ 56%]
+tests/test_plfs_pipeline.py::TestSchemaHelpers::test_nic_agriculture PASSED [ 57%]
+tests/test_plfs_pipeline.py::TestSchemaHelpers::test_nic_manufacturing PASSED [ 58%]
+tests/test_plfs_pipeline.py::TestSchemaHelpers::test_nic_construction PASSED [ 60%]
+tests/test_plfs_pipeline.py::TestSchemaHelpers::test_nic_retail PASSED   [ 61%]
+tests/test_plfs_pipeline.py::TestSchemaHelpers::test_nic_logistics PASSED [ 62%]
+tests/test_plfs_pipeline.py::TestSchemaHelpers::test_nic_education PASSED [ 63%]
+tests/test_plfs_pipeline.py::TestSchemaHelpers::test_nic_it_creative PASSED [ 64%]
+tests/test_plfs_pipeline.py::TestSchemaHelpers::test_nic_financial PASSED [ 65%]
+tests/test_plfs_pipeline.py::TestSchemaHelpers::test_regular_salaried_high PASSED [ 66%]
+tests/test_plfs_pipeline.py::TestSchemaHelpers::test_casual_labour_low PASSED [ 67%]
+tests/test_plfs_pipeline.py::TestSchemaHelpers::test_unemployed_low PASSED [ 68%]
+tests/test_plfs_pipeline.py::TestSchemaHelpers::test_not_in_lf_low PASSED [ 69%]
+tests/test_plfs_pipeline.py::TestSchemaHelpers::test_own_account_worker_moderate PASSED [ 70%]
+tests/test_plfs_pipeline.py::TestSchemaHelpers::test_none_status_moderate PASSED [ 71%]
+tests/test_plfs_pipeline.py::TestSchemaHelpers::test_regular_salaried_high_wages_gives_high_score PASSED [ 72%]
+tests/test_plfs_pipeline.py::TestSchemaHelpers::test_unemployed_low_score PASSED [ 73%]
+tests/test_plfs_pipeline.py::TestSchemaHelpers::test_score_bounded_0_100 PASSED [ 74%]
+tests/test_plfs_pipeline.py::TestSchemaHelpers::test_none_status_returns_default PASSED [ 75%]
+tests/test_plfs_pipeline.py::TestSchemaHelpers::test_state_code_27_is_maharashtra PASSED [ 76%]
+tests/test_plfs_pipeline.py::TestSchemaHelpers::test_state_code_33_is_tamil_nadu PASSED [ 77%]
+tests/test_plfs_pipeline.py::TestSchemaHelpers::test_state_code_map_covers_all_36 PASSED [ 78%]
+tests/test_plfs_pipeline.py::TestSchemaHelpers::test_graduate_is_80 PASSED [ 80%]
+tests/test_plfs_pipeline.py::TestSchemaHelpers::test_not_literate_is_5 PASSED [ 81%]
+tests/test_plfs_pipeline.py::TestSchemaHelpers::test_doctorate_is_95 PASSED [ 82%]
+tests/test_plfs_pipeline.py::TestPipelineEndToEnd::test_valid_csv_succeeds PASSED [ 83%]
+tests/test_plfs_pipeline.py::TestPipelineEndToEnd::test_result_rows_ingested_correct PASSED [ 84%]
+tests/test_plfs_pipeline.py::TestPipelineEndToEnd::test_missing_file_returns_failure PASSED [ 85%]
+tests/test_plfs_pipeline.py::TestPipelineEndToEnd::test_missing_hard_column_returns_failure PASSED [ 86%]
+tests/test_plfs_pipeline.py::TestPipelineEndToEnd::test_limit_respected PASSED [ 87%]
+tests/test_plfs_pipeline.py::TestPipelineEndToEnd::test_long_form_column_names_accepted PASSED [ 88%]
+tests/test_plfs_pipeline.py::TestPipelineEndToEnd::test_result_has_elapsed_seconds PASSED [ 89%]
+tests/test_plfs_pipeline.py::TestPipelineEndToEnd::test_result_summary_string_valid PASSED [ 90%]
+tests/test_plfs_pipeline.py::TestPipelineEndToEnd::test_utf8_bom_csv_accepted PASSED [ 91%]
+tests/test_plfs_pipeline.py::TestPipelineEndToEnd::test_mixed_sector_values_produce_varied_area_types PASSED [ 92%]
+tests/test_plfs_pipeline.py::TestColSpec::test_all_schema_columns_have_dtype PASSED [ 93%]
+tests/test_plfs_pipeline.py::TestColSpec::test_all_schema_columns_have_description PASSED [ 94%]
+tests/test_plfs_pipeline.py::TestColSpec::test_sector_spec_has_correct_allowed_values PASSED [ 95%]
+tests/test_plfs_pipeline.py::TestColSpec::test_age_spec_range PASSED     [ 96%]
+tests/test_plfs_pipeline.py::TestColSpec::test_general_education_level_range PASSED [ 97%]
+tests/test_plfs_pipeline.py::TestColSpec::test_required_columns_soft_are_in_schema PASSED [ 98%]
+tests/test_plfs_pipeline.py::TestColSpec::test_column_aliases_have_valid_targets PASSED [100%]
+
+================================== FAILURES ===================================
+__________ TestFieldMapping.test_no_internet_no_mobile_gives_limited __________
+
+self = <tests.test_plfs_pipeline.TestFieldMapping object at 0x0000016CD82C8D00>
+
+    def test_no_internet_no_mobile_gives_limited(self):
+        df = _minimal_valid_df(5)
+        df["Internet_Used"] = 2
+        df["Mobile_Phone_Used"] = 2
+        out = self._map(df)
+>       assert all(out["digital_access"] == "Limited")
+E       AssertionError: assert False
+E        +  where False = all(0    Occasional\n1    Occasional\n2    Occasional\n3    Occasional\n4    Occasional\nName: digital_access, dtype: object == 'Limited')
+
+tests\test_plfs_pipeline.py:407: AssertionError
+___________ TestImputation.test_no_nulls_remain_in_categorical_cols ___________
+
+self = <tests.test_plfs_pipeline.TestImputation object at 0x0000016CD828EDA0>
+
+    def test_no_nulls_remain_in_categorical_cols(self):
+        df = _minimal_valid_df(20)
+        # Remove optional columns to force nulls in mapped output
+        df = df.drop(columns=["Industry_Code_NIC", "Principal_Status_Code"])
+>       imputed = self._full_pipeline_to_impute(df)
+
+tests\test_plfs_pipeline.py:482: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <tests.test_plfs_pipeline.TestImputation object at 0x0000016CD828EDA0>
+df =           State  Sector  ...  Duration_Vocational_Training  MPCE_Class
+0   Maharashtra       2  ...                   ...         6.0           8
+19  Maharashtra       2  ...                           6.0           8
+
+[20 rows x 15 columns]
+
+    def _full_pipeline_to_impute(self, df):
+        pipe = _pipeline()
+        df, aliased = pipe._stage_detect_columns(df)
+>       mapped = pipe._stage_map_fields(df)
+
+tests\test_plfs_pipeline.py:475: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <ingestion.plfs_pipeline.PLFSPipeline object at 0x0000016CD83FC190>
+df =           State  Sector  ...  Duration_Vocational_Training  MPCE_Class
+0   Maharashtra       2  ...                   ...         6.0           8
+19  Maharashtra       2  ...                           6.0           8
+
+[20 rows x 15 columns]
+
+    def _stage_map_fields(self, df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Map PLFS columns \u2192 internal TalentProfile feature vectors.
+    
+        Mapping Logic
+        -------------
+        state               \u2190 State (code\u2192name) or State_Code
+        domain              \u2190 Industry_Code_NIC \u2192 nic_to_domain()
+        area_type           \u2190 Sector (1=Rural, 2=Urban/Semi-Urban)
+        digital_access      \u2190 Internet_Used + Mobile_Phone_Used
+        opportunity_level   \u2190 Principal_Status_Code \u2192 status_to_opportunity()
+        learning_behavior   \u2190 General_Education_Level \u2192 EDUCATION_TO_SCORE
+        experience_consistency \u2190 Years_Formal_Education (normalised)
+        economic_activity   \u2190 Principal_Status_Code + Wages_Salary_Cash
+        offline_capability  \u2190 Sector==Rural + Physical occupation (NCO)
+        digital_presence    \u2190 Internet_Used
+        creation_output     \u2190 Occupation_Code_NCO (high NCO = higher output proxy)
+        innovation_problem_solving \u2190 Technical_Education_Level
+        collaboration_community    \u2190 Vocational_Training_Received
+        learning_hours      \u2190 Duration_Vocational_Training * 4 (weekly proxy)
+        projects            \u2190 Constant 2 (not directly observable in PLFS)
+        literacy_rate       \u2190 average education level per state (state-level)
+        unemployment_rate   \u2190 % unemployed per state (state-level)
+        workforce_participation \u2190 % in LF per state (state-level)
+        internet_penetration    \u2190 % internet users per state (state-level)
+        urban_population_percent \u2190 % urban per state (state-level)
+        per_capita_income   \u2190 MPCE_Class \xd7 median MPCE lookup
+        """
+        logger.info("Stage 4 ù Field mapping (%d rows)", len(df))
+        out = pd.DataFrame()
+    
+        # \u2500\u2500 a. State \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+        if "State" in df.columns:
+            out["state"] = df["State"].astype(str).str.strip().str.title()
+        elif "State_Code" in df.columns:
+            out["state"] = df["State_Code"].apply(
+                lambda c: STATE_CODE_MAP.get(int(c) if pd.notna(c) else 0, "Unknown")
+            )
+        else:
+            out["state"] = "Unknown"
+    
+        # \u2500\u2500 b. Domain via NIC \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+        if "Industry_Code_NIC" in df.columns:
+            out["domain"] = df["Industry_Code_NIC"].apply(
+                lambda x: nic_to_domain(int(x) if pd.notna(x) else None)
+            )
+        else:
+            out["domain"] = "General"
+    
+        # \u2500\u2500 c. Area Type \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+        if "Sector" in df.columns:
+            sector_num = pd.to_numeric(df["Sector"], errors="coerce")
+            out["area_type"] = sector_num.apply(
+                lambda s: "Rural" if s == 1 else ("Urban" if s == 2 else "Semi-Urban")
+            )
+        else:
+            out["area_type"] = "Urban"
+    
+        # \u2500\u2500 d. Digital Access \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+        internet = pd.to_numeric(df.get("Internet_Used", pd.Series(dtype=float)), errors="coerce")
+        mobile   = pd.to_numeric(df.get("Mobile_Phone_Used", pd.Series(dtype=float)), errors="coerce")
+    
+        def _digital_access(row_idx):
+            inet = internet.iloc[row_idx] if row_idx < len(internet) else np.nan
+            mob  = mobile.iloc[row_idx]   if row_idx < len(mobile)   else np.nan
+            has_inet = (inet == 1) if pd.notna(inet) else None
+            has_mob  = (mob  == 1) if pd.notna(mob)  else None
+            if has_inet:
+                return "High"
+            elif has_mob:
+                return "Regular"
+            elif has_inet is False and has_mob is False:
+                return "Limited"
+            else:
+                return "Occasional"
+    
+        out["digital_access"] = [_digital_access(i) for i in range(len(df))]
+    
+        # \u2500\u2500 e. Opportunity Level \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+        status = pd.to_numeric(df.get("Principal_Status_Code", pd.Series(dtype=float)), errors="coerce")
+        out["opportunity_level"] = status.apply(
+            lambda s: status_to_opportunity(int(s) if pd.notna(s) else None)
+        )
+    
+        # \u2500\u2500 f. Learning Behavior \u2190 Education Level \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+        edu = pd.to_numeric(df.get("General_Education_Level", pd.Series(dtype=float)), errors="coerce")
+        out["learning_behavior"] = edu.apply(
+            lambda e: EDUCATION_TO_SCORE.get(int(e), 50) if pd.notna(e) else 50
+        ).astype(int)
+    
+        # \u2500\u2500 g. Experience Consistency \u2190 Years of Education \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+        yrs_edu = pd.to_numeric(df.get("Years_Formal_Education", pd.Series(dtype=float)), errors="coerce")
+        # Scale 0\u201320 years \u2192 10\u201390 score
+        out["experience_consistency"] = yrs_edu.apply(
+            lambda y: min(90, max(10, int(y * 4))) if pd.notna(y) else 45
+        ).astype(int)
+    
+        # \u2500\u2500 h. Economic Activity \u2190 Status + Wages \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+        wages = pd.to_numeric(
+            df.get("Wages_Salary_Cash", pd.Series(dtype=float)), errors="coerce"
+        )
+>       out["economic_activity"] = [
+            status_to_economic_activity(
+                int(status.iloc[i]) if pd.notna(status.iloc[i]) else None,
+                float(wages.iloc[i]) if i < len(wages) and pd.notna(wages.iloc[i]) else None,
+            )
+            for i in range(len(df))
+        ]
+
+ingestion\plfs_pipeline.py:619: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+.0 = <range_iterator object at 0x0000016CD834E330>
+
+    out["economic_activity"] = [
+        status_to_economic_activity(
+>           int(status.iloc[i]) if pd.notna(status.iloc[i]) else None,
+            float(wages.iloc[i]) if i < len(wages) and pd.notna(wages.iloc[i]) else None,
+        )
+        for i in range(len(df))
+    ]
+
+ingestion\plfs_pipeline.py:621: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <pandas.core.indexing._iLocIndexer object at 0x0000016CD836BBA0>, key = 0
+
+    @final
+    def __getitem__(self, key):
+        check_dict_or_set_indexers(key)
+        if type(key) is tuple:
+            key = tuple(list(x) if is_iterator(x) else x for x in key)
+            key = tuple(com.apply_if_callable(x, self.obj) for x in key)
+            if self._is_scalar_access(key):
+                return self.obj._get_value(*key, takeable=self._takeable)
+            return self._getitem_tuple(key)
+        else:
+            # we by definition only have the 0th axis
+            axis = self.axis or 0
+    
+            maybe_callable = com.apply_if_callable(key, self.obj)
+>           return self._getitem_axis(maybe_callable, axis=axis)
+
+C:\Users\HP\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\indexing.py:1153: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <pandas.core.indexing._iLocIndexer object at 0x0000016CD836BBA0>, key = 0
+axis = 0
+
+    def _getitem_axis(self, key, axis: AxisInt):
+        if key is Ellipsis:
+            key = slice(None)
+        elif isinstance(key, ABCDataFrame):
+            raise IndexError(
+                "DataFrame indexer is not allowed for .iloc\n"
+                "Consider using .loc for automatic alignment."
+            )
+    
+        if isinstance(key, slice):
+            return self._get_slice_axis(key, axis=axis)
+    
+        if is_iterator(key):
+            key = list(key)
+    
+        if isinstance(key, list):
+            key = np.asarray(key)
+    
+        if com.is_bool_indexer(key):
+            self._validate_key(key, axis)
+            return self._getbool_axis(key, axis=axis)
+    
+        # a list of integers
+        elif is_list_like_indexer(key):
+            return self._get_list_axis(key, axis=axis)
+    
+        # a single integer
+        else:
+            key = item_from_zerodim(key)
+            if not is_integer(key):
+                raise TypeError("Cannot index by location index with a non-integer key")
+    
+            # validate the location
+>           self._validate_integer(key, axis)
+
+C:\Users\HP\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\indexing.py:1714: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <pandas.core.indexing._iLocIndexer object at 0x0000016CD836BBA0>, key = 0
+axis = 0
+
+    def _validate_integer(self, key: int | np.integer, axis: AxisInt) -> None:
+        """
+        Check that 'key' is a valid position in the desired axis.
+    
+        Parameters
+        ----------
+        key : int
+            Requested position.
+        axis : int
+            Desired axis.
+    
+        Raises
+        ------
+        IndexError
+            If 'key' is not a valid position in axis 'axis'.
+        """
+        len_axis = len(self.obj._get_axis(axis))
+        if key >= len_axis or key < -len_axis:
+>           raise IndexError("single positional indexer is out-of-bounds")
+E           IndexError: single positional indexer is out-of-bounds
+
+C:\Users\HP\AppData\Local\Programs\Python\Python310\lib\site-packages\pandas\core\indexing.py:1647: IndexError
+=========================== short test summary info ===========================
+FAILED tests/test_plfs_pipeline.py::TestFieldMapping::test_no_internet_no_mobile_gives_limited
+FAILED tests/test_plfs_pipeline.py::TestImputation::test_no_nulls_remain_in_categorical_cols
+======================== 2 failed, 93 passed in 3.31s =========================
