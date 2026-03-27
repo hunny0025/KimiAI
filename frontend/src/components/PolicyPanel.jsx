@@ -296,6 +296,50 @@ const PolicyPanel = ({ language }) => {
                                         <div className="text-green-400 text-xs">-{simulation.factors_impact.migration}</div>
                                     </div>
                                 </div>
+
+                                {/* Mathematical Model Transparency */}
+                                {simulation.methodology && (
+                                    <div className="mt-4 p-4 bg-gray-950 border border-gray-700/50 rounded-lg">
+                                        <div className="flex items-center gap-2 mb-3">
+                                            <Shield size={14} className="text-purple-400" />
+                                            <span className="text-xs font-bold text-purple-300 uppercase tracking-wider">
+                                                Mathematical Model
+                                            </span>
+                                        </div>
+                                        <div className="space-y-2">
+                                            <div className="text-xs text-gray-400">
+                                                <span className="text-gray-500">Model:</span>{' '}
+                                                <span className="text-blue-300 font-mono">{simulation.methodology.model}</span>
+                                            </div>
+                                            <div className="bg-gray-900 p-2.5 rounded border border-gray-800">
+                                                <div className="text-xs text-blue-300 font-mono font-bold mb-1.5">
+                                                    {simulation.methodology.formula}
+                                                </div>
+                                                <div className="space-y-0.5">
+                                                    {simulation.methodology.variables && Object.entries(simulation.methodology.variables).map(([key, desc]) => (
+                                                        <div key={key} className="text-[10px] text-gray-500">
+                                                            <span className="text-blue-400 font-mono">{key}</span> = {desc}
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                            <div className="text-xs text-gray-400">
+                                                <span className="text-gray-500">Policy Effect ({simulation.methodology.applied_policy}):</span>{' '}
+                                                {simulation.methodology.policy_effects?.[simulation.methodology.applied_policy] && 
+                                                    Object.entries(simulation.methodology.policy_effects[simulation.methodology.applied_policy]).map(([factor, effect]) => (
+                                                        <span key={factor} className="inline-block bg-gray-800 text-yellow-300 text-[10px] font-mono px-1.5 py-0.5 rounded mr-1 mt-1">
+                                                            {factor.replace(/_/g, ' ')}: {effect}
+                                                        </span>
+                                                    ))
+                                                }
+                                            </div>
+                                            <div className="text-[10px] text-gray-500 border-t border-gray-800 pt-2 mt-2">
+                                                <span className="text-gray-400">Computation:</span>{' '}
+                                                <span className="text-green-300 font-mono">{simulation.methodology.computation}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
                             </motion.div>
                         )}
                     </div>

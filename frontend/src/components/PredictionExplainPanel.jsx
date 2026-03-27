@@ -40,9 +40,19 @@ const PredictionExplainPanel = ({ prediction }) => {
                     AI Explanation & Transparency
                 </h3>
                 <span className="ml-auto text-[10px] bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded border border-blue-500/30">
-                    Explainable AI
+                    SHAP-inspired XAI
                 </span>
             </div>
+            {/* XAI Methodology */}
+            {explanations.method && (
+                <div className="mb-4 p-3 bg-gray-900/60 border border-gray-700/50 rounded-lg">
+                    <div className="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Method</div>
+                    <div className="text-xs text-blue-300 font-mono">{explanations.method}</div>
+                    {explanations.formula && (
+                        <div className="text-[10px] text-gray-400 font-mono mt-1">Formula: {explanations.formula}</div>
+                    )}
+                </div>
+            )}
 
             {/* Positive Factors */}
             {explanations.top_positive_factors?.length > 0 && (

@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { Cpu, Activity, Database, ShieldCheck, TrendingUp, CheckCircle, XCircle, Zap } from 'lucide-react';
+import { Cpu, Activity, Database, ShieldCheck, TrendingUp, CheckCircle, XCircle, Zap, BarChart3, Brain } from 'lucide-react';
 import axios from 'axios';
 
 
 const AIStatusPanel = () => {
     const [status, setStatus] = useState(null);
     const [systemStatus, setSystemStatus] = useState(null);
+    const [modelMetrics, setModelMetrics] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchStatus = async () => {
             try {
-                const [aiRes, sysRes] = await Promise.all([
+                const [aiRes, sysRes, metricsRes] = await Promise.all([
                     axios.get('/api/ai-status'),
-                    axios.get('/api/system-status')
+                    axios.get('/api/system-status'),
+                    axios.get('/api/model-metrics').catch(() => null)
                 ]);
                 setStatus(aiRes.data);
                 setSystemStatus(sysRes.data);
+                if (metricsRes) setModelMetrics(metricsRes.data);
 
             } catch (err) {
                 console.error("AI Status Error:", err);
@@ -34,6 +37,8 @@ const AIStatusPanel = () => {
 
     const testResults = systemStatus?.test_results || {};
     const allTestsPassed = systemStatus?.tests_passed === systemStatus?.total_tests;
+    const metrics = modelMetrics?.metrics;
+    const methodology = modelMetrics?.methodology;
 
     return (
         <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 mb-6 relative overflow-hidden">
@@ -132,8 +137,51 @@ const AIStatusPanel = () => {
                     )}
                 </div>
             </div>
+
+            {/* Model Evaluation Metrics – R², MAE, RMSE */}
+            {metrics && (
+                <div className="mt-4 border-t border-gray-800 pt-4">
+                    <div className="flex items-center gap-2 mb-3">
+                        <BarChart3 size={16} className="text-purple-400" />
+                        <span className="text-sm font-bold text-gray-300 uppercase tracking-wider">Model Evaluation Metrics</span>
+                        <span className="ml-auto text-[10px] bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded border border-purple-500/30">
+                            5-fold CV
+                        </span>
+                    </div>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <div className="p-3 bg-gray-800/50 rounded-lg border border-gray-700/50 text-center">
+                            <div className="text-2xl font-bold text-green-400 font-mono">{metrics.r_squared}%</div>
+                            <div className="text-[10px] text-gray-500 uppercase mt-1">R² Score</div>
+                            <div className="text-[9px] text-gray-600">Coefficient of Determination</div>
+                        </div>
+                        <div className="p-3 bg-gray-800/50 rounded-lg border border-gray-700/50 text-center">
+                            <div className="text-2xl font-bold text-blue-400 font-mono">{metrics.mae}</div>
+                            <div className="text-[10px] text-gray-500 uppercase mt-1">MAE</div>
+                            <div className="text-[9px] text-gray-600">Mean Absolute Error</div>
+                        </div>
+                        <div className="p-3 bg-gray-800/50 rounded-lg border border-gray-700/50 text-center">
+                            <div className="text-2xl font-bold text-orange-400 font-mono">{metrics.rmse}</div>
+                            <div className="text-[10px] text-gray-500 uppercase mt-1">RMSE</div>
+                            <div className="text-[9px] text-gray-600">Root Mean Squared Error</div>
+                        </div>
+                        <div className="p-3 bg-gray-800/50 rounded-lg border border-gray-700/50 text-center">
+                            <div className="flex items-center justify-center gap-1.5 mb-1">
+                                <Brain size={14} className="text-purple-400" />
+                                <span className="text-xs font-bold text-purple-300">XAI</span>
+                            </div>
+                            <div className="text-[10px] text-gray-400 leading-snug">
+                                {methodology?.xai_method?.split('(')[0]?.trim() || 'SHAP-inspired'}
+                            </div>
+                            <div className="text-[9px] text-gray-600 font-mono mt-0.5">
+                                {methodology?.xai_formula || 'φᵢ = w(fᵢ) × Δxᵢ'}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
 
 export default AIStatusPanel;
+
