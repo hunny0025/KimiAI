@@ -74,7 +74,7 @@ const RegionalMap = ({ language }) => {
     <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
       {/* ── Header ── */}
       <div className="px-5 pt-5 pb-3 border-b border-gray-800">
-        <div className="flex items-start justify-between gap-4">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
               <MapPin size={16} className="text-blue-400" />
@@ -83,32 +83,58 @@ const RegionalMap = ({ language }) => {
               </h2>
               <span className="text-[10px] bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full border border-green-500/30">LIVE</span>
             </div>
-            <p className="text-xs text-gray-500 max-w-xl">{cfg.sublabel}</p>
+            <p className="text-xs text-gray-500 max-w-sm">{cfg.sublabel}</p>
           </div>
-          {/* View toggle */}
-          <div className="flex gap-1 bg-gray-800 p-1 rounded-lg flex-shrink-0">
-            {Object.entries(VIEW_CONFIG).map(([key, v]) => (
-              <button
-                key={key}
-                onClick={() => setView(key)}
-                className={`px-3 py-1 rounded text-xs font-semibold transition-all ${
-                  view === key
-                    ? 'bg-blue-600 text-white shadow'
-                    : 'text-gray-400 hover:text-white'
-                }`}
-              >
-                {v.label.split(' ')[0]}
-              </button>
-            ))}
+          
+          <div className="flex items-center gap-3 w-full md:w-auto">
+            {/* Search Bar */}
+            <div className="relative group flex-1 md:w-64">
+              <div className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-blue-400 transition-colors">
+                <MapPin size={14} />
+              </div>
+              <input
+                type="text"
+                placeholder="Search state (e.g. Maharashtra)..."
+                className="w-full bg-gray-950/50 border border-gray-800 rounded-lg pl-8 pr-3 py-2 text-xs text-white placeholder:text-gray-600 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all"
+                onChange={(e) => {
+                  const val = e.target.value.toLowerCase();
+                  if (!val) return;
+                  const match = data.find(s => s.state.toLowerCase().includes(val));
+                  if (match) setSelected(match);
+                }}
+              />
+            </div>
+
+            {/* View toggle */}
+            <div className="flex gap-1 bg-gray-800 p-1 rounded-lg flex-shrink-0">
+              {Object.entries(VIEW_CONFIG).map(([key, v]) => (
+                <button
+                  key={key}
+                  onClick={() => setView(key)}
+                  className={`px-3 py-1 rounded text-xs font-semibold transition-all ${
+                    view === key
+                      ? 'bg-blue-600 text-white shadow'
+                      : 'text-gray-400 hover:text-white'
+                  }`}
+                >
+                  {v.label.split(' ')[0]}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
         {/* ── Currently Showing ── */}
-        <div className="mt-3 flex items-center gap-2">
-          <Info size={12} className="text-gray-500 flex-shrink-0" />
-          <span className="text-[11px] text-gray-500">
-            Showing: <span className="text-blue-300 font-semibold">{cfg.label}</span> — click any state to see a detailed breakdown
-          </span>
+        <div className="mt-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Info size={12} className="text-gray-500 flex-shrink-0" />
+            <span className="text-[11px] text-gray-500">
+              Showing: <span className="text-blue-300 font-semibold">{cfg.label}</span> — click any state or use search
+            </span>
+          </div>
+          <div className="text-[10px] text-gray-500">
+            {data.length} Regions Indexed
+          </div>
         </div>
       </div>
 
@@ -253,14 +279,52 @@ const RegionalMap = ({ language }) => {
               </div>
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center h-full py-12 px-6 text-center gap-3">
-              <MapPin size={28} className="text-gray-700" />
-              <p className="text-sm text-gray-500 font-medium">Select a State</p>
-              <p className="text-xs text-gray-600">
-                Click any state on the map to view its Innovation Intensity, Hidden Talent Density, Ecosystem Balance, and more.
-              </p>
-              <div className="text-xs text-gray-700 border border-gray-800 rounded px-2 py-1">
-                {data.length} states loaded
+            <div className="p-4 h-full flex flex-col">
+              <div className="flex flex-col items-center justify-center py-6 px-4 text-center gap-3 border-b border-gray-800/50 mb-4">
+                <MapPin size={24} className="text-gray-700" />
+                <p className="text-sm text-gray-500 font-medium">Select a State</p>
+                <p className="text-[11px] text-gray-600">
+                  Click the map or use search to view detailed regional metrics.
+                </p>
+              </div>
+              
+              <div className="flex-1 overflow-y-auto pr-1 custom-scrollbar">
+                <h3 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">
+                  Top performing regions
+                </h3>
+                <div className="space-y-2">
+                  {[...data]
+                    .sort((a, b) => (b[cfg.field] || 0) - (a[cfg.field] || 0))
+                    .slice(0, 8)
+                    .map((item, idx) => (
+                      <button
+                        key={item.state}
+                        onClick={() => setSelected(item)}
+                        className="w-full flex items-center justify-between p-2 rounded bg-gray-800/30 hover:bg-gray-800/60 border border-transparent hover:border-gray-700 transition-all text-left group"
+                      >
+                        <div className="flex items-center gap-2 min-w-0">
+                          <span className="text-[10px] font-mono text-gray-600 w-3">{idx + 1}</span>
+                          <span className="text-xs text-gray-300 truncate group-hover:text-white transition-colors">
+                            {item.state}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1.5 flex-shrink-0">
+                          <span className="text-xs font-bold text-blue-400">
+                            {item[cfg.field]}
+                            {cfg.unit}
+                          </span>
+                          <ChevronRight size={10} className="text-gray-600 group-hover:text-gray-400" />
+                        </div>
+                      </button>
+                    ))}
+                </div>
+              </div>
+
+              <div className="mt-4 p-3 bg-blue-500/5 rounded border border-blue-500/10">
+                <div className="text-[10px] text-blue-300 font-bold uppercase mb-1">Regional Insight</div>
+                <p className="text-[11px] text-gray-500 leading-relaxed">
+                  Southern and Western states show higher innovation intensity, while northern regions are seeing rapid growth in digital access.
+                </p>
               </div>
             </div>
           )}

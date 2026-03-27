@@ -803,16 +803,24 @@ def regional_analysis():
     except Exception as e:
         print(f"[regional-analysis] DB unavailable: {e}")
         return jsonify([
-            {"state": "Maharashtra", "talent_density": 72, "innovation_index": 68, "risk_level": "Low"},
-            {"state": "Uttar Pradesh", "talent_density": 45, "innovation_index": 39, "risk_level": "High"},
-            {"state": "Tamil Nadu", "talent_density": 65, "innovation_index": 61, "risk_level": "Moderate"},
-            {"state": "Karnataka", "talent_density": 78, "innovation_index": 74, "risk_level": "Low"},
-            {"state": "Rajasthan", "talent_density": 42, "innovation_index": 38, "risk_level": "High"},
-            {"state": "West Bengal", "talent_density": 55, "innovation_index": 50, "risk_level": "Moderate"},
-            {"state": "Bihar", "talent_density": 33, "innovation_index": 28, "risk_level": "Critical"},
-            {"state": "Gujarat", "talent_density": 70, "innovation_index": 66, "risk_level": "Low"},
-            {"state": "Madhya Pradesh", "talent_density": 44, "innovation_index": 40, "risk_level": "High"},
-            {"state": "Andhra Pradesh", "talent_density": 58, "innovation_index": 53, "risk_level": "Moderate"}
+            {"state": "Maharashtra", "hidden_talent_density": 18, "innovation_intensity": 82, "ecosystem_balance_score": 8.4, "digital_access": 88, "specialization": "Finance & Tech Hub"},
+            {"state": "Uttar Pradesh", "hidden_talent_density": 12, "innovation_intensity": 45, "ecosystem_balance_score": 6.1, "digital_access": 52, "specialization": "Agri-Manufacturing"},
+            {"state": "Tamil Nadu", "hidden_talent_density": 22, "innovation_intensity": 78, "ecosystem_balance_score": 8.1, "digital_access": 84, "specialization": "Automotive & IT"},
+            {"state": "Karnataka", "hidden_talent_density": 25, "innovation_intensity": 88, "ecosystem_balance_score": 8.9, "digital_access": 92, "specialization": "Global Tech Capital"},
+            {"state": "Rajasthan", "hidden_talent_density": 14, "innovation_intensity": 42, "ecosystem_balance_score": 5.8, "digital_access": 48, "specialization": "Renewable Energy"},
+            {"state": "West Bengal", "hidden_talent_density": 16, "innovation_intensity": 55, "ecosystem_balance_score": 6.4, "digital_access": 60, "specialization": "Creative & Trade Hub"},
+            {"state": "Bihar", "hidden_talent_density": 8, "innovation_intensity": 33, "ecosystem_balance_score": 4.1, "digital_access": 35, "specialization": "Agri-Resilience"},
+            {"state": "Gujarat", "hidden_talent_density": 20, "innovation_intensity": 80, "ecosystem_balance_score": 8.2, "digital_access": 81, "specialization": "Industrial Excellence"},
+            {"state": "Madhya Pradesh", "hidden_talent_density": 11, "innovation_intensity": 44, "ecosystem_balance_score": 5.9, "digital_access": 46, "specialization": "Centrally Connected Agri"},
+            {"state": "Andhra Pradesh", "hidden_talent_density": 15, "innovation_intensity": 62, "ecosystem_balance_score": 6.8, "digital_access": 70, "specialization": "Pharma & Maritime"},
+            {"state": "Telangana", "hidden_talent_density": 24, "innovation_intensity": 85, "ecosystem_balance_score": 8.6, "digital_access": 90, "specialization": "IT & Life Sciences"},
+            {"state": "Kerala", "hidden_talent_density": 28, "innovation_intensity": 75, "ecosystem_balance_score": 8.3, "digital_access": 95, "specialization": "Education & Services Hub"},
+            {"state": "Punjab", "hidden_talent_density": 13, "innovation_intensity": 58, "ecosystem_balance_score": 6.5, "digital_access": 78, "specialization": "Agri-Mechanical Hub"},
+            {"state": "Haryana", "hidden_talent_density": 19, "innovation_intensity": 72, "ecosystem_balance_score": 7.4, "digital_access": 82, "specialization": "Manufacturing & Real Estate"},
+            {"state": "Odisha", "hidden_talent_density": 10, "innovation_intensity": 48, "ecosystem_balance_score": 5.5, "digital_access": 54, "specialization": "Mining & Blue Economy"},
+            {"state": "Assam", "hidden_talent_density": 9, "innovation_intensity": 40, "ecosystem_balance_score": 5.2, "digital_access": 42, "specialization": "Tea & Resource Mgmt"},
+            {"state": "Jharkhand", "hidden_talent_density": 7, "innovation_intensity": 35, "ecosystem_balance_score": 4.8, "digital_access": 40, "specialization": "Steel & Minerals"},
+            {"state": "Punjab", "hidden_talent_density": 13, "innovation_intensity": 58, "ecosystem_balance_score": 6.5, "digital_access": 78, "specialization": "Agri-Mechanical Hub"}
         ])
 
 @app.route('/api/data-foundation', methods=['GET'])
