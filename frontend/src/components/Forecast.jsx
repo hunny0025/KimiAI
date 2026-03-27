@@ -90,7 +90,7 @@ const ForecastPanel = ({ language }) => {
                                 </ResponsiveContainer>
                             </div>
                         </div>
-                    );
+                })}
             </div>
 
             {/* NEW: Strategic Outlook Summary (3 Cards at bottom) */}

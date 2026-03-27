@@ -1081,8 +1081,22 @@ def nat_stats():
         return jsonify(data)
     except Exception as e:
         print(f"[national-distribution] DB unavailable: {e}")
-        return jsonify({"stability_index": 72.4, "hidden_talent_rate": 18.3,
-                        "critical_zones": 3, "skill_velocity": 4.2, "fallback": True})
+        return jsonify({
+            "stability_index": 72.4,
+            "hidden_talent_rate": 18.3,
+            "critical_zones": 3,
+            "skill_velocity": 4.2,
+            "total_users": 1250,
+            "distribution": {
+                "Technology": 450,
+                "Manufacturing": 320,
+                "Healthcare": 210,
+                "Agriculture": 150,
+                "Others": 120
+            },
+            "underrepresented": ["Manufacturing", "Agriculture"],
+            "fallback": True
+        })
 
 @app.route('/api/policy', methods=['POST'])
 def policy_recommendations():
