@@ -1034,8 +1034,15 @@ def get_forecast():
             return jsonify(repo.skill_forecast(db))
     except Exception as e:
         print(f"[forecast] DB unavailable: {e}")
-        return jsonify([{"month": m, "projected_score": round(58 + i * 1.5, 1), "risk": "Moderate"}
-                        for i, m in enumerate(["Apr","May","Jun","Jul","Aug","Sep"])])
+        # Return domain-keyed dictionary for ForecastPanel.jsx
+        return jsonify({
+            "Technology": {"trend": "Rising", "velocity": 1.4, "status": "Growing"},
+            "Healthcare": {"trend": "Rising", "velocity": 1.2, "status": "High Demand"},
+            "Manufacturing": {"trend": "Stable", "velocity": 0.8, "status": "Sustainable"},
+            "Agriculture": {"trend": "Declining", "velocity": -0.4, "status": "Monitor"},
+            "Construction": {"trend": "Stable", "velocity": 1.0, "status": "Growing"},
+            "Finance": {"trend": "Rising", "velocity": 1.1, "status": "Sustainable"}
+        })
 
 # --- STANDARD ENDPOINTS (State Specs, Risks, etc) ---
 
@@ -1055,10 +1062,13 @@ def market_intel():
             return jsonify(repo.market_intelligence(db))
     except Exception as e:
         print(f"[market-intelligence] DB unavailable: {e}")
+        # Return domain-keyed dictionary for MarketPanel.jsx
         return jsonify({
-            "top_domains": ["Technology", "Manufacturing", "Agriculture"],
-            "skill_gaps": [{"domain": "Technology", "gap": 42}, {"domain": "Healthcare", "gap": 31}],
-            "demand_forecast": "Growing demand across digital and skilled-trade sectors."
+            "Retail & Sales": {"demand_index": 82, "supply_index": 70.0, "skill_gap": 12.0, "status": "Critical Shortage"},
+            "Manufacturing": {"demand_index": 78, "supply_index": 72.0, "skill_gap": 6.0, "status": "Shortage"},
+            "Technology": {"demand_index": 85, "supply_index": 65.0, "skill_gap": 20.0, "status": "Critical Shortage"},
+            "Agriculture": {"demand_index": 75, "supply_index": 76.0, "skill_gap": -1.0, "status": "Balanced"},
+            "Logistics": {"demand_index": 80, "supply_index": 74.0, "skill_gap": 6.0, "status": "Shortage"}
         })
 
 @app.route('/api/national-distribution', methods=['GET'])

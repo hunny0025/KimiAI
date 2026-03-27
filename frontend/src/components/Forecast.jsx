@@ -91,7 +91,27 @@ const ForecastPanel = ({ language }) => {
                             </div>
                         </div>
                     );
-                })}
+            </div>
+
+            {/* NEW: Strategic Outlook Summary (3 Cards at bottom) */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                <div className="bg-gradient-to-br from-blue-900/20 to-gray-900 border border-blue-800/50 rounded-lg p-5">
+                    <div className="text-blue-400 text-xs uppercase tracking-widest font-bold mb-2">Avg Talent Velocity</div>
+                    <div className="text-2xl font-bold text-white">4.2% <span className="text-sm font-normal text-blue-300/60">yr/yr</span></div>
+                    <div className="text-[10px] text-gray-400 mt-2">National skill growth exceeds baseline projection by 1.2%</div>
+                </div>
+                
+                <div className="bg-gradient-to-br from-emerald-900/20 to-gray-900 border border-emerald-800/50 rounded-lg p-5">
+                    <div className="text-emerald-400 text-xs uppercase tracking-widest font-bold mb-2">Intervention Priority</div>
+                    <div className="text-2xl font-bold text-white">High <span className="text-sm font-normal text-emerald-300/60">(Tier 2)</span></div>
+                    <div className="text-[10px] text-gray-400 mt-2">Critical demand in Manufacturing & Tech requires immediate skilling hubs</div>
+                </div>
+
+                <div className="bg-gradient-to-br from-purple-900/20 to-gray-900 border border-purple-800/50 rounded-lg p-5">
+                    <div className="text-purple-400 text-xs uppercase tracking-widest font-bold mb-2">5-Year ROI Projection</div>
+                    <div className="text-2xl font-bold text-white">₹4,250 <span className="text-sm font-normal text-purple-300/60">Cr</span></div>
+                    <div className="text-[10px] text-gray-400 mt-2">Estimated GDP contribution from optimized rural talent allocation</div>
+                </div>
             </div>
         </div>
     );

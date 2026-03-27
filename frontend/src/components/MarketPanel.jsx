@@ -35,7 +35,7 @@ const MarketPanel = ({ language }) => {
         return {
             name: domain,
             gap: item?.skill_gap || 0,
-            status: item?.status
+            status: item?.status || 'Stable'
         };
     });
 
