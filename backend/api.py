@@ -54,8 +54,21 @@ from db import repository as repo
 # Configure Flask to serve the frontend static files
 app = Flask(__name__, static_folder='../frontend/dist', static_url_path='/')
 
-# ── CORS: open to all origins ─────────────────────────────────────────────
-CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=False)
+# ── CORS: explicit permissive setup ──────────────────────────────────────
+CORS(app,
+     resources={r"/api/*": {"origins": "*"}},
+     allow_headers=["Content-Type", "Authorization"],
+     methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+     supports_credentials=False)
+
+@app.after_request
+def inject_cors_headers(response):
+    """Belt-and-suspenders: inject CORS headers on every response,
+    including error responses that Flask-CORS might miss."""
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+    return response
 
 # ── Rate limiter (Fix 2) – 30 predictions per minute per IP ───────────────
 limiter = Limiter(
