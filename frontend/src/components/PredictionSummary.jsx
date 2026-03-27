@@ -57,10 +57,23 @@ const PredictionSummary = ({ data, sourceVerification }) => {
                             WORKFORCE ASSESSMENT
                         </h2>
                         <div className="text-xs text-gray-500 uppercase mt-1 tracking-wider flex items-center gap-2">
-                            <span>Domain: {domain}</span>
-                            <span className="text-gray-700">|</span>
-                            <Cpu size={12} className="text-blue-500" />
-                            <span className="text-blue-400">{model_used}</span>
+                        {(() => {
+                            const INTERNAL_LABELS = ['fallback', 'heuristic', 'default', 'error', 'exception', 'fallback heuristic'];
+                            const safeModelUsed = INTERNAL_LABELS.includes((model_used || '').toLowerCase()) ? null : model_used;
+                            const safeDomain = INTERNAL_LABELS.includes((domain || '').toLowerCase()) ? null : domain;
+                            return (
+                                <>
+                                    {safeDomain && <span>Domain: {safeDomain}</span>}
+                                    {safeDomain && safeModelUsed && <span className="text-gray-700">|</span>}
+                                    {safeModelUsed && (
+                                        <>
+                                            <Cpu size={12} className="text-blue-500" />
+                                            <span className="text-blue-400">{safeModelUsed}</span>
+                                        </>
+                                    )}
+                                </>
+                            );
+                        })()}
                         </div>
                     </div>
                     {isHiddenTalent && (

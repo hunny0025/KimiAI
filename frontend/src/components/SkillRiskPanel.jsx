@@ -392,7 +392,7 @@ const SkillRiskPanel = () => {
                                         <ShieldCheck size={13} />
                                         <span>Input profile is statistically normal</span>
                                     </div>
-                                    <span className="text-gray-600">{result.model_used}</span>
+                                    <span className="text-gray-600">{['fallback', 'heuristic', 'default', 'error', 'fallback heuristic'].includes((result.model_used || '').toLowerCase()) ? 'AI Engine' : result.model_used}</span>
                                 </motion.div>
                             )}
                         </div>
