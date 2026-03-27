@@ -1378,7 +1378,7 @@ def _run_training_pipeline(csv_path: str, data_source: str = "seed"):
     return r2, importances, len(df), feat_cols
 
 
-@app.route('/api/train-model', methods=['POST'])
+@app.route('/api/train-model-real', methods=['POST'])
 def train_real_model():
     """Train GradientBoostingRegressor + IsolationForest on the real India dataset."""
     try:
@@ -1613,9 +1613,9 @@ def model_status():
 
 
 
-# ── Fix 3: Model metrics endpoint ─────────────────────────────────────────────
-@app.route('/api/model-metrics', methods=['GET'])
-def model_metrics():
+# ── Fix 3: Model metrics endpoint (Versioned Card) ─────────────────────────────
+@app.route('/api/model-metrics-card', methods=['GET'])
+def model_metrics_card():
     metrics_path = os.path.join(BASE_DIR, "models", "model_card.json")
     if os.path.exists(metrics_path):
         with open(metrics_path) as f:
