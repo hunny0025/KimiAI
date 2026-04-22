@@ -172,6 +172,7 @@ function App() {
                         {activeTab === 'simulation' && <div className="space-y-6"><WhatIf language={language} /></div>}
                         {activeTab === 'dataset' && <DatasetPanel />}
                         {activeTab === 'skill-risk' && <SkillRiskPanel />}
+                    </AnimatePresence>
                     <footer className="mt-12 py-8 border-t border-gray-800 text-center text-xs text-gray-600 space-y-2">
                         <div className="font-black text-gray-500 tracking-[0.2em]">SKILL GENOME</div>
                         <div>SKILL GENOME — KNOWLEDGE-DRIVEN AUTONOMOUS REGIONAL MAPPING</div>
