@@ -43,7 +43,7 @@ export default function AgentStatusBar({ activeTab, setActiveTab }) {
         >
           K
         </div>
-        <span className="font-black text-white text-sm tracking-wider hidden sm:block">KARM.AI</span>
+        <span className="font-black text-white text-sm tracking-wider hidden sm:block">Skill Genome</span>
       </button>
 
       {/* Agent Pills */}

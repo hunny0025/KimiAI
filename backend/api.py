@@ -76,7 +76,7 @@ def inject_cors_headers(response):
 @app.route('/api/health')
 def health_check():
     """Render health check endpoint."""
-    return jsonify({'status': 'ok', 'service': 'KARM.AI API', 'version': '2.0.0'}), 200
+    return jsonify({'status': 'ok', 'service': 'Skill Genome API', 'version': '2.0.0'}), 200
 
 # ── Rate limiter (Fix 2) – 30 predictions per minute per IP ───────────────
 limiter = Limiter(
@@ -2229,7 +2229,7 @@ def autonomous_check():
 @app.route('/')
 def home():
     return jsonify({
-        "status": "KARM.AI — Knowledge-driven Autonomous Regional Mapping — Online",
+        "status": "Skill Genome — Knowledge-driven Autonomous Regional Mapping — Online",
         "agents": ["Scout Agent 🔍", "Analyst Agent 🧠", "Policy Agent 📋", "Monitor Agent 📡"],
         "endpoints": ["/api/orchestrate", "/api/predict", "/api/ai-status", "/api/alerts", "/api/health"],
         "version": "2.0.0-AGENTIC"

@@ -353,9 +353,9 @@ export default function AgentCommandCenter() {
       {/* ── Header ── */}
       <div className="flex items-start justify-between flex-wrap gap-4">
         <div>
-          <h2 className="text-2xl font-black text-white tracking-tight">KARM.AI <span className="text-violet-400">Agent Command Center</span></h2>
+          <h2 className="text-2xl font-black text-white tracking-tight">Skill Genome <span className="text-violet-400">Agent Command Center</span></h2>
           <p className="text-gray-400 text-sm mt-1">
-            Knowledge-driven Autonomous Regional Mapping · 4 specialized AI agents
+            Skill Genome · 4 specialized AI agents
           </p>
         </div>
         <div className="flex items-center gap-3">

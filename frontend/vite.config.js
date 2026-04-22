@@ -25,9 +25,9 @@ const pwaPlugin = VitePWA ? VitePWA({
     globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}']
   },
   manifest: {
-    name: 'KARM.AI',
-    short_name: 'KARM.AI',
-    description: 'Knowledge-driven Autonomous Regional Mapping — Multi-Agent Workforce Intelligence',
+    name: 'Skill Genome',
+    short_name: 'Skill Genome',
+    description: 'Skill Genome — Multi-Agent Workforce Intelligence',
     theme_color: '#00ff88',
     background_color: '#0d1117',
     display: 'standalone',

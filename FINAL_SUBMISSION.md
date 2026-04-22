@@ -1,15 +1,15 @@
-# 🛡️ KARM.AI: Knowledge-driven Autonomous Regional Mapping
+# 🛡️ Skill Genome: Knowledge-driven Autonomous Regional Mapping
 ### *Next-Gen Multi-Agent Workforce Intelligence System*
 
 ---
 
 ## 1. Project Overview & Approach
-KARM.AI is a transformation of the legacy **SkillGenome X** platform into a sophisticated, autonomous agentic workforce intelligence system. While traditional dashboards merely *display* data, KARM.AI *acts* on it using a 4-agent ecosystem.
+Skill Genome is a transformation of the legacy **SkillGenome X** platform into a sophisticated, autonomous agentic workforce intelligence system. While traditional dashboards merely *display* data, Skill Genome *acts* on it using a 4-agent ecosystem.
 
 ### The Problem
 Traditional regional workforce planning is reactive, slow, and manual. Data exists (Census, PLFS), but identifying "High-Risk Skills" or "Hidden Talent Pools" requires expert analysis that takes months.
 
-### The KARM.AI Solution (The Approach)
+### The Skill Genome Solution (The Approach)
 We implemented a **Decentralized Agentic Pipeline** that automates the entire intelligence lifecycle:
 1.  **Scout Agent**: Performs autonomous scans of 736 districts to detect statistical anomalies.
 2.  **Analyst Agent**: Evaluates structural risks (e.g., Digital Divide, Literacy Gaps) using optimized ML metrics.
@@ -45,7 +45,7 @@ Don't just show the screen. Tell a story:
 *   **Q: How does the AI generate recommendations?**
     *   *A: We integrated the Groq API. We feed the district's metrics into a custom system prompt that tells LLaMA 3 to act as a "National Policy Advisor".*
 *   **Q: How is it different from normal Data Analytics?**
-    *   *A: It's "Actionable AI". Normal analytics tell you what happened. KARM.AI tells you **what to do next** and calculates the cost/benefit.*
+    *   *A: It's "Actionable AI". Normal analytics tell you what happened. Skill Genome tells you **what to do next** and calculates the cost/benefit.*
 
 ---
 

@@ -50,7 +50,7 @@ const Sidebar = ({ activeTab, setActiveTab, language, setLanguage }) => {
                     <Activity className="text-white w-5 h-5" />
                 </div>
                 <div>
-                    <h1 className="font-bold text-white tracking-wider text-sm">KARM.AI</h1>
+                    <h1 className="font-bold text-white tracking-wider text-sm">Skill Genome</h1>
                     <div className="text-[10px] text-gray-500 tracking-widest uppercase">
                         {language === 'hi' ? 'अभिनव बुद्धिमत्ता' : 'Agentic Intelligence'}
                     </div>
