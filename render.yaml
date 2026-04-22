@@ -1,14 +1,22 @@
 services:
   - type: web
-    name: skillgenome-api
+    name: karm-ai-api
     env: python
+    region: singapore
     rootDir: backend
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn api:app"
+    startCommand: "gunicorn api:app --workers 2 --threads 4 --timeout 120 --bind 0.0.0.0:$PORT"
+    healthCheckPath: /api/health
     envVars:
       - key: PYTHON_VERSION
-        value: 3.12.0
+        value: "3.10.0"
       - key: FLASK_ENV
         value: production
+      - key: FLASK_DEBUG
+        value: "0"
       - key: ALLOWED_ORIGINS
-        value: "*"
+        value: "https://karm-ai.vercel.app"
+      - key: GROQ_API_KEY
+        sync: false           # ← set this manually in Render dashboard
+      - key: DATABASE_URL
+        sync: false           # ← set this manually in Render dashboard (optional)

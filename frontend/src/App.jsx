@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 // --- PRODUCTION DEPLOYMENT CONFIG ---
-// Always use relative URLs so the Vercel proxy rewrites /api/* → Render backend.
-// Do NOT set axios.defaults.baseURL to the Render URL — that bypasses the proxy and causes CORS.
-axios.defaults.baseURL = '';
+// On Vercel: set VITE_API_URL=https://karm-ai-api.onrender.com
+// On local:  leave unset → uses Vite proxy → http://127.0.0.1:5000
+axios.defaults.baseURL = import.meta.env.VITE_API_URL || '';
 
 import Sidebar from './components/Sidebar';
 import AlertsPanel from './components/AlertsPanel';
@@ -31,6 +31,7 @@ import TalentSummary from './components/TalentSummary';
 import ProvenanceBanner from './components/ProvenanceBanner';
 // Fix 4 – Error boundary
 import ErrorBoundary from './components/ErrorBoundary';
+import MonitorTicker from './components/MonitorTicker';
 
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -70,7 +71,6 @@ function App() {
 
     // Update Prediction when inputs change (debounced in real app, here direct)
     useEffect(() => {
-        // Basic debounce could be added, but for now calling direct
         const timer = setTimeout(() => fetchPrediction(), 500);
         return () => clearTimeout(timer);
     }, [signals, context]);
@@ -111,7 +111,7 @@ function App() {
                 {/* KPI Header */}
                 <KPIRow data={kpiData} language={language} />
 
-                <div className="flex-1 overflow-y-auto p-6 scroll-smooth">
+                    <div className="flex-1 overflow-y-auto p-6 pb-10 scroll-smooth">
                     <AnimatePresence mode="wait">
                         {activeTab === 'dashboard' && (
                             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-6">
@@ -176,8 +176,8 @@ function App() {
 
                     {/* Footer / Watermark Area */}
                     <div className="mt-12 text-center opacity-20 text-xs">
-                        <div>SKILLGENOME X NATIONAL INTELLIGENCE SYSTEM</div>
-                        <div>SECURE CONNECTION ESTABLISHED</div>
+                        <div>KARM.AI — KNOWLEDGE-DRIVEN AUTONOMOUS REGIONAL MAPPING</div>
+                        <div>4-AGENT PIPELINE · SECURE CONNECTION ESTABLISHED</div>
                     </div>
                 </div>
             </main>
@@ -189,6 +189,8 @@ function App() {
                 <AlertsPanel prediction={prediction} language={language} />
             </aside>
         </div>
+        {/* FIX 6: Global Monitor Ticker */}
+        <MonitorTicker language={language} />
         </ErrorBoundary>
     );
 }

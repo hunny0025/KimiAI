@@ -12,7 +12,7 @@ const WhatIf = ({ language }) => {
 
     // Mock simulation result
     const [result, setResult] = useState({
-        risk: 25, // Adjusted base to positive for bar chart visibility or logic
+        risk: 25,
         growth: 42,
         stability: 65
     });
@@ -23,8 +23,6 @@ const WhatIf = ({ language }) => {
         setParams(next);
 
         // Simple simulation logic
-        // Digital access reduces risk, increases growth, increases stability
-        // Tech disruption increases growth (efficiency) but increases risk and lowers stability slightly
         setResult({
             risk: Math.max(0, 30 - (next.digital * 0.3) - (next.funding * 0.2) + (next.disruption * 0.1) - (next.migration * 0.05)),
             growth: Math.min(100, 40 + (next.funding * 0.4) + (next.digital * 0.2) + (next.disruption * 0.1)),
@@ -43,7 +41,7 @@ const WhatIf = ({ language }) => {
             <div className="flex items-center justify-between mb-6">
                 <div>
                     <h2 className="text-lg font-bold text-white uppercase tracking-wider">
-                        {language === 'en' ? 'What-If Simulation Engine' : 'सिमुलेशन इंजन'}
+                        {language === 'en' ? 'Policy Simulator — What-If Engine' : 'सिमुलेशन इंजन'}
                     </h2>
                     <p className="text-xs text-gray-400">Model policy impacts on national talent metrics.</p>
                 </div>
@@ -94,7 +92,7 @@ const WhatIf = ({ language }) => {
 
                 {/* Output Viz */}
                 <div className="bg-gray-900/50 rounded p-4 border border-gray-800">
-                    <h3 className="text-xs font-bold text-gray-500 uppercase mb-4 tracking-wider">Projected Output (12 Mo)</h3>
+                    <h3 className="text-xs font-bold text-gray-500 uppercase mb-4 tracking-wider">Agent Intelligence Report (12 Mo)</h3>
                     <div className="h-[250px] w-full">
                         <ResponsiveContainer width="100%" height="100%">
                             <BarChart data={chartData} layout="vertical" margin={{ left: 0 }}>

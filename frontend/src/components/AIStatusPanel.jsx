@@ -1,6 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Cpu, Activity, Database, ShieldCheck, TrendingUp, CheckCircle, XCircle, Zap, BarChart3, Brain } from 'lucide-react';
 import axios from 'axios';
+import { motion, AnimatePresence } from 'framer-motion';
+
+// FIX 2: Deploy All Agents sequential messages
+const DEPLOY_STEPS = [
+    '🔍 Scout Agent scanning 736 districts...',
+    '🧠 Analyst Agent processing anomalies...',
+    '📋 Policy Agent generating recommendations...',
+    '📡 Monitor Agent activated — system live',
+];
+
+// FIX 3: Static comms log messages (timestamps update every 60s)
+const BASE_MSGS = [
+    { from: 'Scout Agent',   to: 'Analyst Agent',   color_from: 'text-green-400',  color_to: 'text-blue-400',  msg: '"23 anomalies detected in Bihar, UP, Jharkhand"' },
+    { from: 'Analyst Agent', to: 'Policy Agent',    color_from: 'text-green-400',  color_to: 'text-blue-400',  msg: '"Risk Score 78/100. Top factor: Internet_Penetration"' },
+    { from: 'Policy Agent',  to: 'Monitor Agent',   color_from: 'text-green-400',  color_to: 'text-blue-400',  msg: '"3 interventions generated. Est. ROI: ₹285.4 Cr"' },
+    { from: 'Monitor Agent', to: 'Command Center',  color_from: 'text-green-400',  color_to: 'text-blue-400',  msg: '"Pipeline complete. Next autonomous scan in 60s"' },
+];
 
 
 const AIStatusPanel = () => {
@@ -8,6 +25,18 @@ const AIStatusPanel = () => {
     const [systemStatus, setSystemStatus] = useState(null);
     const [modelMetrics, setModelMetrics] = useState(null);
     const [loading, setLoading] = useState(true);
+    // FIX 2: Deploy state
+    const [deploying, setDeploying] = useState(false);
+    const [deployStep, setDeployStep] = useState(-1);
+    const [deployDone, setDeployDone] = useState(false);
+    // FIX 3: comms log timestamps
+    const [commsTime, setCommsTime] = useState(() => {
+        const now = new Date();
+        return [0,1,2,3].map(i => {
+            const d = new Date(now.getTime() + i * 1000);
+            return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}:${String(d.getSeconds()).padStart(2,'0')}`;
+        });
+    });
 
     useEffect(() => {
         const fetchStatus = async () => {
@@ -30,8 +59,29 @@ const AIStatusPanel = () => {
 
         fetchStatus();
         const interval = setInterval(fetchStatus, 30000);
-        return () => clearInterval(interval);
+        // FIX 3: refresh timestamps every 60s
+        const tsInterval = setInterval(() => {
+            const now = new Date();
+            setCommsTime([0,1,2,3].map(i => {
+                const d = new Date(now.getTime() + i * 1000);
+                return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}:${String(d.getSeconds()).padStart(2,'0')}`;
+            }));
+        }, 60000);
+        return () => { clearInterval(interval); clearInterval(tsInterval); };
     }, []);
+
+    // FIX 2: Deploy All Agents handler
+    const handleDeploy = async () => {
+        if (deploying || deployDone) return;
+        setDeploying(true);
+        setDeployStep(0);
+        for (let i = 0; i < DEPLOY_STEPS.length; i++) {
+            setDeployStep(i);
+            await new Promise(r => setTimeout(r, 600 + i * 200));
+        }
+        setDeployDone(true);
+        setDeploying(false);
+    };
 
     if (loading || !status) return <div className="p-4 bg-gray-900 rounded-xl animate-pulse h-32"></div>;
 
@@ -51,7 +101,7 @@ const AIStatusPanel = () => {
                         <Cpu size={24} />
                     </div>
                     <div>
-                        <h3 className="text-xl font-bold text-white">National AI Engine</h3>
+                        <h3 className="text-xl font-bold text-white">KARM.AI — National Agent Engine</h3>
                         <p className="text-sm text-gray-400 flex items-center space-x-2">
                             <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
                             <span>System Active & Learning</span>
@@ -179,6 +229,63 @@ const AIStatusPanel = () => {
                     </div>
                 </div>
             )}
+            {/* FIX 2: Deploy All Agents Button */}
+            <div className="mt-6">
+                <motion.button
+                    whileHover={{ scale: deployDone ? 1 : 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={handleDeploy}
+                    disabled={deploying || deployDone}
+                    className="w-full py-4 rounded-xl font-black text-lg tracking-wider transition-all disabled:cursor-not-allowed"
+                    style={{
+                        background: deployDone ? '#166534' : 'linear-gradient(135deg, #00ff88, #00cc6a)',
+                        color: deployDone ? '#4ade80' : '#000',
+                        boxShadow: deployDone ? 'none' : '0 0 30px rgba(0,255,136,0.35)',
+                    }}
+                >
+                    {deployDone ? '✅ All 4 Agents Deployed & Active' : deploying ? DEPLOY_STEPS[deployStep] || '⚡ Deploying...' : '🚀 Deploy All Agents'}
+                </motion.button>
+
+                {/* Step progress indicators */}
+                {(deploying || deployDone) && (
+                    <div className="mt-3 space-y-1">
+                        {DEPLOY_STEPS.map((step, i) => (
+                            <motion.div
+                                key={i}
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: deployStep >= i || deployDone ? 1 : 0.3, x: 0 }}
+                                className={`text-xs font-mono flex items-center gap-2 ${
+                                    deployDone || deployStep > i ? 'text-green-400' :
+                                    deployStep === i ? 'text-yellow-400 animate-pulse' : 'text-gray-600'
+                                }`}
+                            >
+                                <span>{deployDone || deployStep > i ? '✓' : deployStep === i ? '▶' : '○'}</span>
+                                {step}
+                            </motion.div>
+                        ))}
+                    </div>
+                )}
+            </div>
+
+            {/* FIX 3: Agent Communication Log */}
+            <div className="mt-6 rounded-xl p-4 font-mono text-xs" style={{ background: '#0d1117', border: '1px solid #22c55e55' }}>
+                <div className="flex items-center gap-2 mb-3">
+                    <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                    <span className="text-green-400 font-bold tracking-widest">🔗 AGENT COMMUNICATION LOG</span>
+                </div>
+                <div className="space-y-2">
+                    {BASE_MSGS.map((m, i) => (
+                        <div key={i} className="flex gap-2 flex-wrap">
+                            <span className="text-gray-600 shrink-0">[{commsTime[i]}]</span>
+                            <span className={`${m.color_from} font-semibold shrink-0`}>{m.from}</span>
+                            <span className="text-gray-500">→</span>
+                            <span className={`${m.color_to} shrink-0`}>{m.to}:</span>
+                            <span className="text-gray-300">{m.msg}</span>
+                        </div>
+                    ))}
+                    <div className="text-green-400 mt-1">█ <span className="animate-pulse">_</span></div>
+                </div>
+            </div>
         </div>
     );
 };

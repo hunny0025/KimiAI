@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-// Fix 7 – PWA support (install: npm install vite-plugin-pwa)
-// Comment out VitePWA if the package is not installed yet
+
+// Optional PWA support — only loaded if package is installed
 let VitePWA;
 try {
   VitePWA = (await import('vite-plugin-pwa')).VitePWA;
@@ -25,11 +25,11 @@ const pwaPlugin = VitePWA ? VitePWA({
     globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}']
   },
   manifest: {
-    name: 'SkillGenome X',
-    short_name: 'SkillGenome',
-    description: 'National Talent Intelligence System',
-    theme_color: '#0F6E56',
-    background_color: '#0A0F1E',
+    name: 'KARM.AI',
+    short_name: 'KARM.AI',
+    description: 'Knowledge-driven Autonomous Regional Mapping — Multi-Agent Workforce Intelligence',
+    theme_color: '#00ff88',
+    background_color: '#0d1117',
     display: 'standalone',
     icons: [
       { src: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
@@ -43,8 +43,22 @@ export default defineConfig({
     react(),
     ...(pwaPlugin ? [pwaPlugin] : [])
   ],
+  build: {
+    outDir: 'dist',
+    sourcemap: false,
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          charts: ['recharts'],
+          motion: ['framer-motion'],
+        }
+      }
+    }
+  },
   server: {
-    // Fix 10 – dev proxy so /api/* calls reach Flask on :5000 without CORS issues
+    // Local dev proxy — /api/* → Flask on :5000
     proxy: {
       '/api': {
         target: 'http://127.0.0.1:5000',

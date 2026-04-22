@@ -23,7 +23,7 @@ const RiskAnalysisPanel = ({ language }) => {
         <div className="space-y-6">
             <div className="flex items-center justify-between">
                 <h2 className="text-lg font-bold text-white uppercase tracking-wider">
-                    {language === 'en' ? 'Structural Risk Analysis' : 'संरचनात्मक जोखिम विश्लेषण'}
+                    {language === 'en' ? '🧠 Analyst Agent — Risk Intelligence' : 'संरचनात्मक जोखिम विश्लेषण'}
                 </h2>
             </div>
             <div className="grid grid-cols-1 gap-4">
@@ -52,7 +52,7 @@ const RiskAnalysisPanel = ({ language }) => {
         <div className="space-y-6">
             <div className="flex items-center justify-between">
                 <h2 className="text-lg font-bold text-white uppercase tracking-wider">
-                    {language === 'en' ? 'Structural Risk Analysis' : 'संरचनात्मक जोखिम विश्लेषण'}
+                    {language === 'en' ? '🧠 Analyst Agent — Risk Intelligence' : 'संरचनात्मक जोखिम विश्लेषण'}
                 </h2>
                 <div className="px-3 py-1 bg-red-900/20 border border-red-500/30 text-red-400 rounded text-xs animate-pulse">
                     {criticalCount} Critical Zones Detected

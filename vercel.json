@@ -2,10 +2,6 @@
     "version": 2,
     "builds": [
         {
-            "src": "backend/api.py",
-            "use": "@vercel/python"
-        },
-        {
             "src": "frontend/package.json",
             "use": "@vercel/static-build",
             "config": {
@@ -13,14 +9,17 @@
             }
         }
     ],
-    "rewrites": [
+    "routes": [
         {
-            "source": "/api/(.*)",
-            "destination": "backend/api.py"
+            "src": "/api/(.*)",
+            "dest": "https://karm-ai-api.onrender.com/api/$1",
+            "headers": {
+                "Access-Control-Allow-Origin": "*"
+            }
         },
         {
-            "source": "/(.*)",
-            "destination": "/frontend/index.html"
+            "src": "/(.*)",
+            "dest": "/index.html"
         }
     ]
 }
